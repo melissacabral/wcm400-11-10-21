@@ -1,0 +1,154 @@
+/*
+Theme Name: MMC Simplest Ever
+Description: A simple theme for learning how to make themes
+Author: Melissa Cabral
+Version:  0.1
+License: GPLv3 or higher
+
+Other comments can go here
+*/
+
+body {
+  max-width: 60em;
+  margin: 0 auto;
+  font-family: Calibri, Arial, sans-serif;
+  font-size: 130%;
+  line-height: 1.35;
+}
+
+.header,
+.footer,
+.content,
+.sidebar {
+  padding: 2%;
+  box-sizing: border-box;
+}
+img{
+  max-width: 100%;
+  height:auto;
+}
+a {
+  color: dodgerblue;
+  text-decoration: none;
+}
+
+a:hover,
+a:focus {
+  color: #666;
+  text-decoration: underline;
+}
+
+header nav {
+  background: #eee;
+  margin: 1em 0;
+}
+
+header nav ul,
+header nav li {
+  margin: 0;
+  padding: 0;
+  position: relative;
+  list-style: none;
+}
+header nav ul ul {
+  display: none;
+}
+header nav a {
+  display: block;
+  padding: 0.5em;
+}
+
+header nav a:hover {
+  background: #ddd;
+  text-decoration: none;
+}
+
+article {
+  margin-bottom: 3em;
+}
+
+input {
+  font: inherit;
+}
+/* dont do hidden labels like this... im being lazy  */
+.screen-reader-text {
+  display: none;
+}
+
+.postmeta {
+  clear: both;
+  background: #eee;
+  margin: 1em 0;
+  padding: 0.3em;
+  font-size: 0.7em;
+  color: #999;
+}
+
+.postmeta span:not(:last-child) {
+  border-right: solid 1px #ccc;
+  margin-right: 0.3em;
+  padding-right: 0.3em;
+}
+
+@supports (grid-area: auto) {
+  /*define the overall layout */
+  .site {
+    display: grid;
+    grid-template-areas:
+      "header"
+      "main"
+      "sidebar"
+      "footer";
+  }
+  .header {
+    grid-area: header;
+  }
+  .content {
+    grid-area: main;
+  }
+  .sidebar {
+    grid-area: sidebar;
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+
+  /* 	mediumish breakpoint - 2 cols */
+  @media screen and (min-width: 650px) {
+    .site {
+      grid-template-columns: 2.5fr 1fr;
+      grid-template-areas:
+        "header header"
+        "main sidebar"
+        "footer footer";
+    }
+    .menu {
+      list-style-type: none;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      text-align: center;
+    }
+    .menu li {
+     
+      min-width: 100px;
+      flex-grow: 1;
+      flex-basis: 0;
+    }
+    .menu .sub-menu,
+    .menu .children,
+    .menu ul {
+      position: absolute;
+      z-index: 9999;
+      top: 100%;
+      left: 0;
+      text-align: left;
+      background-color: #ddd;
+      min-width: 200px;
+    }
+    .menu li:hover > ul {
+      display: block;
+    }
+  }
+} /*end grid check*/
