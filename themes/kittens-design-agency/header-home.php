@@ -18,7 +18,7 @@
 </head>
 <body <?php body_class(); ?>>
 	<div class="site">
-		<header class="header">
+		<header class="header header-home">
 			<div class="branding">
 				<?php 
 				//custom logo activated in functions.php
@@ -43,7 +43,22 @@
 			</div>
 
 			<div class="utilities">
-				<?php dynamic_sidebar( 'header_area' ); ?>
-			</div>		
+				<?php 
+				//when using a function from any plugin, check to see if it's active first
+				if( function_exists('mmc_social_icons') ){
+					mmc_social_icons();
+				}
+				?>
+
+				<!-- Utility menu will go here -->
+				<ul>
+					<li><?php wp_loginout( home_url() ); ?></li>
+				</ul>
+				<?php //if the current user is not logged in, show the login form
+				if( ! is_user_logged_in() ){
+					wp_login_form();
+				} 
+				?>
+			</div>
 		</header>
 

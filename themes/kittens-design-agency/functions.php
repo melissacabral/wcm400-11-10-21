@@ -127,4 +127,29 @@ function mmc_pagination(){
 	echo '</section>';
 }
 
+/**
+ * Set up all Widget Areas (dynamic sidebars) for our site
+ */
+add_action( 'widgets_init', 'mmc_widget_areas' );
+function mmc_widget_areas(){
+	register_sidebar(array(
+		'name' 	=> 'Header Area',
+		'id' 	=> 'header_area',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+	));
+	register_sidebar(array(
+		'name' 	=> 'Blog Sidebar',
+		'id' 	=> 'blog_sidebar',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+	));
+	register_sidebar(array(
+		'name' 	=> 'Footer Area',
+		'id' 	=> 'footer_area',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+	));
+}
+
 //no close PHP

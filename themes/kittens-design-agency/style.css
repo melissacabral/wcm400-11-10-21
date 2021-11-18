@@ -477,6 +477,39 @@ img {
     background-color: rgba(255,255,255,.4);
 }
 
+/* Text meant only for screen readers. */
+.screen-reader-text,
+.wp-block-search__label {
+  border: 0;
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  width: 1px;
+  word-wrap: normal !important;
+}
+.screen-reader-text:focus,
+.wp-block-search__label:focus {
+  background-color: #eee;
+  clip: auto !important;
+  clip-path: none;
+  color: #444;
+  display: block;
+  font-size: 1em;
+  height: auto;
+  left: 5px;
+  line-height: normal;
+  padding: 15px 23px 14px;
+  text-decoration: none;
+  top: 5px;
+  width: auto;
+  z-index: 100000; /* Above WP toolbar. */
+}
+
+
 /*
 == Header
 */
@@ -504,6 +537,11 @@ img {
     text-transform: uppercase;
     letter-spacing: normal;
 }
+.header .utilities{
+    display: flex;
+    flex-wrap: wrap;
+}
+
 
 /*
 == navigation menu
@@ -658,12 +696,15 @@ img {
 .footer {
     background: #D9DDDB;
     color:#484646;
-    padding:5%;
+    padding:5%;    
+}
+.footer-widgets{
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
 }
 .footer .widget{
+    min-width: 300px;
     padding:2em 1em;
     flex-basis: 0;
     flex-grow: 1;
@@ -763,18 +804,13 @@ check for browsers that support grid
         grid-template-areas:          
         "branding" 
         "utilities"
-        "navigation"
-        "search";
+        "navigation";
     }
     .header .branding{
         grid-area:branding;
     }
     .header .navigation{
         grid-area:navigation;
-    }
-    .header .search-form,
-    .header .searchform{
-        grid-area: search;
     }
     .header .utilities{
         grid-area: utilities;
@@ -806,10 +842,10 @@ check for browsers that support grid
         }
 
         .header{
-            grid-template-columns: 2fr 1fr  1fr;
+            grid-template-columns: 1fr  1fr;
             grid-template-areas:   
-            "branding     search     utilities"
-            "navigation   navigation navigation";
+            "branding      utilities"
+            "navigation    navigation";
         }
 
         .branding{
