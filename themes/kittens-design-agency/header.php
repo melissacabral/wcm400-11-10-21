@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-us">
-<head>
-  <?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
+<html <?php language_attributes(); ?>>
+<head>  
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link rel="stylesheet" type="text/css" href="<?php echo get_stylesheet_uri(); ?>">
+	<?php wp_head(); //HOOK. required for the admin bar and plugins to work ?>
+	<link rel="stylesheet" href="<?php echo get_stylesheet_uri(); ?>">
 	
 	<style type="text/css">
 		/* custom header: see functions.php */
@@ -12,11 +12,13 @@
 			background-image: url(<?php header_image(); ?>);
 			background-size: cover;
 			background-position: center center;
+			color: #<?php header_textcolor() ?>;
 		}
 	</style>
 
 </head>
 <body <?php body_class(); ?>>
+	<?php wp_body_open(); //required hook  ?>
 	<div class="site">
 		<header class="header">
 			<div class="branding">
@@ -25,7 +27,7 @@
 				the_custom_logo(); 
 				?>
 				<h1 class="site-title">
-					<a href="<?php echo home_url(); ?>">
+					<a href="<?php echo esc_url(home_url()); ?>">
 						<?php bloginfo( 'name' ); ?>
 					</a>
 				</h1>

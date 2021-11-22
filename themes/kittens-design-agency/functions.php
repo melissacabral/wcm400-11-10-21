@@ -151,5 +151,47 @@ function mmc_widget_areas(){
 		'after_widget' => '</div>',
 	));
 }
+/**
+ * Fix the default comment count so it excludes pingbacks and trackbacks
+ */
+add_filter( 'get_comments_number', 'mmc_comment_count' );
+function mmc_comment_count(){
+	//"this" post ID
+	global $id;
+	$comments = get_approved_comments( $id );
+	$count = 0;
+	foreach( $comments AS $comment ){
+		//if it's a real comment, count it
+		if( $comment->comment_type == 'comment' ){
+			$count ++;
+		}
+	}
+	return $count;
+}
 
+/**
+ * Count the number of trackbacks and pingbacks on any post
+ */
+function mmc_pings_count(){
+	//"this" post ID
+	global $id;
+	$comments = get_approved_comments( $id );
+	$count = 0;
+	foreach( $comments AS $comment ){
+		//if it's anything but a real comment, count it
+		if( $comment->comment_type != 'comment' ){
+			$count ++;
+		}
+	}
+	return $count;
+}
+
+/**
+ * Improve Comment replies with a little JavaScript
+ */
+add_action( 'wp_enqueue_scripts', 'mmc_scripts' );
+function mmc_scripts(){
+	//bring the comment form to the user when they reply
+	wp_enqueue_script( 'comment-reply' );
+}
 //no close PHP

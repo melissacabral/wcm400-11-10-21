@@ -1,6 +1,7 @@
 TODO
 ====
 
+
 * style the login form in the header
 * fix the CSS issue on the image alignment post
 
@@ -12,3 +13,5 @@ DONE
 * set up the menu areas 
 * add pagination to the blog and archives
 * miscellaneous navigation thingsv (paginated posts, yarpp, etc)
+* add widget areas to the blog sidebar, footer, header
+* make front-page template
