@@ -191,6 +191,8 @@ function mmc_pings_count(){
  */
 add_action( 'wp_enqueue_scripts', 'mmc_scripts' );
 function mmc_scripts(){
+	//main css file (style.css)
+	wp_enqueue_style( 'mmc-kitten-style', get_stylesheet_uri() );
 	//bring the comment form to the user when they reply
 	wp_enqueue_script( 'comment-reply' );
 }
