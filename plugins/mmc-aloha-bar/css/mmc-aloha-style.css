@@ -1,0 +1,50 @@
+/* 
+styles for the Aloha Bar Plugin
+Every style here should be as specific as possible 
+*/
+#mmc-aloha-bar{
+	background-color: tomato;
+	color: white;
+	width: 100%;
+	position: fixed;
+	top: 0;
+	left: 0;
+	padding: .25em;
+	z-index: /*99999*/;
+	text-align: center;
+	box-shadow: 2px 2px 4px rgba(0,0,0,.2);
+}
+.admin-bar #mmc-aloha-bar{
+	top: 32px;
+}
+
+#mmc-aloha-bar .mmc-aloha-button{
+	background-color: black;
+	color: white;
+	padding: .25em 1em ;
+	margin-left: .5em;
+	border-radius: 6px;
+	text-transform: uppercase;
+	font-weight: bold;
+}
+#mmc-aloha-bar .mmc-aloha-button:hover,
+#mmc-aloha-bar .mmc-aloha-button:focus{
+	background-color: white;
+	color: black;
+}
+
+#mmc-aloha-bar .aloha-dismiss{
+	float: right;
+	border-radius: 1000px;
+	background-color: rgba(255,255,255,.5);
+	color: black;
+	font-weight: bold;
+	width:  1.5em;
+	height: 1.5em;
+	line-height: 1.5em;
+	cursor: pointer;
+}
+#mmc-aloha-bar .aloha-dismiss:hover{
+	background-color: black;
+	color: white;
+}
