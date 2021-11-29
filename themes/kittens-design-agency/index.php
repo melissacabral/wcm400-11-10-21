@@ -47,6 +47,7 @@
 
 			<?php } //end of The Loop ?>
 			
+			
 		</main>
 		<!-- end .content -->
 		

@@ -38,7 +38,7 @@ add_theme_support('custom-logo', $args);
 //post thumbnails (featured images)
 add_theme_support('post-thumbnails');
 
-//add another image size beyond thumbnail, medoum and large
+//add another image size beyond thumbnail, medium and large
 add_image_size( 'banner', 1600, 400, true);
 
 
@@ -106,25 +106,27 @@ function mmc_menu_areas(){
  * Handle the pagination on all screens
  */
 add_action('loop_end', 'mmc_pagination');
-function mmc_pagination(){
-	echo '<section class="pagination">';
+function mmc_pagination($query){
+		if( $query->is_main_query() ){
+		echo '<section class="pagination">';
 
-	//use is_singular() if you want this to show up on pages
-	if( is_single() ){
-		//single links
-		previous_post_link('%link', '&larr; %title');
-		next_post_link('%link', '%title &rarr;');
-	}else{
-		//archive links. use simple next/prev buttons if on mobile
-		if( wp_is_mobile() ){
-			previous_posts_link('&larr; Newer Posts');
-			next_posts_link('Older Posts &rarr;');
+		//use is_singular() if you want this to show up on pages
+		if( is_single() ){
+			//single links
+			previous_post_link('%link', '&larr; %title');
+			next_post_link('%link', '%title &rarr;');
 		}else{
-			//numbered pagination if on desktop
-			the_posts_pagination();
+			//archive links. use simple next/prev buttons if on mobile
+			if( wp_is_mobile() ){
+				previous_posts_link('&larr; Newer Posts');
+				next_posts_link('Older Posts &rarr;');
+			}else{
+				//numbered pagination if on desktop
+				the_posts_pagination();
+			}
 		}
-	}
-	echo '</section>';
+		echo '</section>';
+	} //end if main loop
 }
 
 /**
@@ -141,6 +143,12 @@ function mmc_widget_areas(){
 	register_sidebar(array(
 		'name' 	=> 'Blog Sidebar',
 		'id' 	=> 'blog_sidebar',
+		'before_widget' => '<div id="%1$s" class="widget %2$s">',
+		'after_widget' => '</div>',
+	));
+	register_sidebar(array(
+		'name' 	=> 'Shop Sidebar',
+		'id' 	=> 'shop_sidebar',
 		'before_widget' => '<div id="%1$s" class="widget %2$s">',
 		'after_widget' => '</div>',
 	));
@@ -196,4 +204,34 @@ function mmc_scripts(){
 	//bring the comment form to the user when they reply
 	wp_enqueue_script( 'comment-reply' );
 }
+
+/**
+ * WooCommerce Support
+ */
+
+add_action( 'after_setup_theme', 'mmc_woo_setup' );
+function mmc_woo_setup(){
+	add_theme_support( 'woocommerce' );
+	add_theme_support( 'wc-product-gallery-zoom' );
+	add_theme_support( 'wc-product-gallery-lightbox' );
+	add_theme_support( 'wc-product-gallery-slider' );
+}
+
+
+//remove the default content wrapper HTML
+remove_action( 'woocommerce_before_main_content', 'woocommerce_output_content_wrapper', 10);
+remove_action( 'woocommerce_after_main_content', 'woocommerce_output_content_wrapper_end', 10);
+
+//add our correct content wrapper HTML
+add_action('woocommerce_before_main_content', 'my_theme_wrapper_start', 10);
+add_action('woocommerce_after_main_content', 'my_theme_wrapper_end', 10);
+function my_theme_wrapper_start() {
+  echo '<main class="content">';
+}
+function my_theme_wrapper_end() {
+  echo '</main>';
+}
+
+
+
 //no close PHP
