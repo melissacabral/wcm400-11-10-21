@@ -1,9 +1,15 @@
 <?php get_header(); //requires header.php ?>
 		<main class="content">
 			<section class="page-title">
-				<h1><?php post_type_archive_title(); ?></h1>
+				<h1><?php _e('Portfolio', 'kittens-design-agency') ?> 
+				<?php single_cat_title( ' - ' ) ?></h1>
 
 				<ul>
+					<li>
+						<a href="<?php echo get_post_type_archive_link( 'work' ); ?>">
+						View All
+						</a>
+					</li>
 					<?php 
 					//show all the terms in our custom taxonomy
 					wp_list_categories( array(

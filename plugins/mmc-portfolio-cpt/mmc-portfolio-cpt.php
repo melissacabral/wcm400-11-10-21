@@ -29,4 +29,29 @@ function mmc_portfolio_setup(){
 							 	),
 		'rewrite'		=> array( 'slug' => 'portfolio' ), 
 	) );
+
+	//Add "work categories"
+	register_taxonomy( 'work_category', 'work', array(
+						'hierarchical' 		=> true,
+						'label'				=> 'Portfolio Category',
+						'show_in_rest'		=> true, //make it show up in the block editor
+						'show_admin_column'	=> true,
+						'rewrite'			=> array( 'slug' => 'portfolio_category' ),
+					) );
+
+	//Add " skills"
+	register_taxonomy( 'skill', 'work', array(
+						'label'				=> 'Skills',
+						'show_in_rest'		=> true, //make it show up in the block editor
+					) );
+}//end CPT function
+
+/**
+ * Flush the permalinks when this plugin activates
+ * this will prevent 404 errors
+ */
+register_activation_hook( __FILE__, 'mmc_flush_rewrite_rules' );
+function mmc_flush_rewrite_rules(){
+	mmc_portfolio_setup();
+	flush_rewrite_rules();
 }

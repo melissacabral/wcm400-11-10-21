@@ -35,7 +35,6 @@ TABLE OF CONTENTS
 /*
 == Styles adapted from Milligram.css
 */
-
 html {
     box-sizing: border-box;
     font-size: 100%;
@@ -53,7 +52,6 @@ body {
     font-weight: 300;
     line-height: 1.6;
     margin:0;
-
 }
 blockquote {
     border-left: 2px solid #E7452A;
@@ -395,7 +393,6 @@ h4,
 h5,
 h6 {
     font-weight: 300;
-    letter-spacing: -.1rem;
     margin-top: 0;
 }
 h1 {
@@ -412,17 +409,14 @@ h3 {
 }
 h4 {
     font-size: 1.3em;
-    letter-spacing: -.08em;
     line-height: 1.35;
 }
 h5 {
     font-size: 1.125em;
-    letter-spacing: -.05em;
     line-height: 1.5;
 }
 h6 {
     font-size: 1em;
-    letter-spacing: 0;
     line-height: 1.4;
 }
 img {
@@ -434,7 +428,6 @@ img {
     content: ' ';
     display: table;
 }
-
 /*----------------end milligramish styles--------------------*/
 /*
 == Utilities
@@ -474,7 +467,7 @@ img {
 == Header
 */
 .header{
-    background: #8B75A4;
+    background-color: #8B75A4;
     color:white;
     background-size: cover;
     background-position: center center;
@@ -483,7 +476,6 @@ img {
 }
 .header > *{
     z-index: 999;
-
 }
 .header:before{
     content: '';
@@ -492,11 +484,9 @@ img {
     right: 0;
     bottom: 0;
     left: 0;
-    background-image: linear-gradient(180deg, rgba(83,72,135,1) 0%, rgba(83,72,135,0.7558210784313726) 31%, rgba(83,72,135,0) 100%);
     opacity: .6; 
     z-index: 0;
 }
-
 .header a{
     color:inherit;
 }
@@ -517,16 +507,39 @@ img {
     letter-spacing: normal;
 }
 .header .utilities{
-    display: flex;
+}
+.header .utilities{
+    display: none;
     flex-wrap: wrap;
     justify-content: space-around;
     align-content: flex-start;
     align-items: start;
+    grid-gap: .5em;
+}
+.utilities > div{
+    height: auto;
+}
+.utilities .menu{
+    display: flex;
+    list-style: none;
+    justify-content: space-between;
+    grid-gap:  .5em 1em;
+    margin: 0;
+    padding: 0;
+}
+.utilities ul,
+.utilities ol,
+.utilities form{
+    margin-bottom: 0;
 }
 .custom-logo-link img{
     width: 15vw;
     max-width: 100px;
     margin: 1em  1em 0;
+}
+.utilities .widget_shopping_cart h2,
+.woocommerce-mini-cart__empty-message{
+    display: none;
 }
 /*
 == navigation menu
@@ -567,6 +580,10 @@ nav .current_page_item a{
     background-color: #E7452A;
     color: white;
 }
+.current-cat a{
+    background-color: tomato;
+    color: white;
+}
 /*
 == Search bar
 */
@@ -594,10 +611,8 @@ nav .current_page_item a{
 }
 .search-form input[type=search]:focus,
 .searchform input[type=search]:focus{
-   
     color:black;
 }
-
 /*
 == Main Content Area 
 */
@@ -659,8 +674,6 @@ nav .current_page_item a{
     list-style-type: none;
     padding:0;
 }
-
-
 /* 
 == Footer
 */
@@ -669,11 +682,9 @@ nav .current_page_item a{
     color:#484646;
     padding:2rem 1rem;    
 }
-
 /*
 == Widgets
 */
-
 .footer-widgets{
     display: flex;
     flex-wrap: wrap;
@@ -685,13 +696,11 @@ nav .current_page_item a{
     padding:2em 1em;
     flex-basis: 0;
     flex-grow: 1;
-
     background-color: rgba(255,255,255,.3);
 }
 .sidebar .widget{
     background-color:rgba(255,255,255,.3) ;
     padding:1em;
-
 }
 /* 
 == Pagination
@@ -831,6 +840,9 @@ check for browsers that support grid
             "branding      utilities"
             "navigation    navigation";
         }
+        .header .utilities{
+          display: flex;
+        }
         .branding{
             text-align: left;
             font-size: 80%;
@@ -841,7 +853,6 @@ check for browsers that support grid
             max-width: 150px;
             margin:  0 1em 0 0;
         }
-       
         .social-navigation ul{
             justify-content: flex-end;
         }
@@ -876,9 +887,6 @@ check for browsers that support grid
     }
 }/*end css grid support requiement*/
 /*body class example - bigger header on front page*/
-.home .header{
-    background-color: orchid;
-}
 .home .header .branding{
     min-height: 60vh;
 }

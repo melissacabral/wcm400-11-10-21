@@ -99,6 +99,7 @@ function mmc_menu_areas(){
 	register_nav_menus( array(
 		'main_menu' => 'Main Menu',
 		'footer_menu' => 'Footer Menu',
+		'banana_menu' => 'Banana'
 	) );
 }
 
@@ -200,7 +201,8 @@ function mmc_pings_count(){
 add_action( 'wp_enqueue_scripts', 'mmc_scripts' );
 function mmc_scripts(){
 	//main css file (style.css)
-	wp_enqueue_style( 'mmc-kitten-style', get_stylesheet_uri() );
+	wp_enqueue_style( 'mmc-kitten-style', get_stylesheet_uri(), array(), '0.1' );
+
 	//bring the comment form to the user when they reply
 	wp_enqueue_script( 'comment-reply' );
 }
@@ -230,6 +232,120 @@ function my_theme_wrapper_start() {
 }
 function my_theme_wrapper_end() {
   echo '</main>';
+}
+
+/**
+ * Theme Customization Options
+ * * Header and footer background color
+ * * font options
+ * @link https://codex.wordpress.org/Theme_Customization_API
+ */
+add_action('customize_register', 'mmc_customize');
+function mmc_customize( $wp_customize ){
+	//custom colors (Color panel already exists)
+	$wp_customize->add_setting( 'header_bgcolor', array(
+		'default' 			=> '#cccccc',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	//Control UI - this will make a color picker
+	$wp_customize->add_control( new WP_Customize_Color_Control( 
+		$wp_customize, 
+		'header_bgcolor_control',
+		array(
+			'label' 	=> 'Header Background Color',
+			'section' 	=> 'colors', //built-in to WP
+			'settings' 	=> 'header_bgcolor',
+		)  ) );
+
+	//footer bg color
+	$wp_customize->add_setting( 'footer_bgcolor', array(
+		'default' 			=> '#cccccc',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	$wp_customize->add_control( new WP_Customize_Color_Control(
+		$wp_customize,
+		'footer_bgcolor_control',
+		array(
+			'label' 	=> 'Footer Background Color',
+			'section' 	=> 'colors',
+			'settings' 	=> 'footer_bgcolor',
+		)	) );
+
+	//Typography section
+	$wp_customize->add_section( 'mmc_typography', array(
+		'title' 	=> 'Typography',
+		'priority' 	=> 30,
+	) );
+	$wp_customize->add_setting( 'body_font', array(
+		'default'			=> 'Roboto',
+		'sanitize_callback' => 'wp_strip_all_tags',
+	) );
+	$wp_customize->add_control( new WP_Customize_Control(
+		$wp_customize,
+		'body_font_control',
+		array(
+			'label' 	=> 'Body Font',
+			'section' 	=> 'mmc_typography',
+			'settings' 	=> 'body_font',
+			'type'		=> 'radio', //or text, select, checkboxes, radio, textarea
+			'choices'	=> array(
+								'Roboto' 		=> 'Roboto - professional',
+								'Lato'			=> 'Lato - approachable',
+								'Nunito' 		=> 'Nunito - playful',
+								'Poppins'		=> 'Poppins - trendy',
+								'Merriweather' 	=> 'Merriweather - classical',
+							),
+		)	) );
+
+} //end customize function
+
+
+/**
+ * Embedded CSS for the customizations
+ */
+add_action('wp_head', 'mmc_customized_css');
+function mmc_customized_css(){
+	$footer_color = get_theme_mod( 'footer_bgcolor' );
+	?>
+	<style>
+		.header{
+			background-color: <?php echo get_theme_mod( 'header_bgcolor' ); ?>  ;
+		}
+		.footer{
+			background-color: <?php echo $footer_color; ?>  ;
+			color: <?php echo mmc_get_contrast( $footer_color ); ?>;
+		}
+		body{
+			font-family: <?php echo get_theme_mod( 'body_font' ); ?>;
+		}
+	</style>
+	<?php
+}
+
+
+/**
+ * Enqueue the correct stylesheet for the font choice
+ */
+add_action( 'wp_enqueue_scripts', 'mmc_google_font' );
+function mmc_google_font(){
+	$bodyfont = urlencode( get_theme_mod('body_font') );
+	$url = "https://fonts.googleapis.com/css2?family=$bodyfont&display=swap";
+	wp_enqueue_style('custom_google_font', $url);
+}
+
+
+/**
+ * Color contrast function
+ * @link https://24ways.org/2010/calculating-color-contrast/
+ */
+function mmc_get_contrast($hexcolor = ''){
+	//remove the # character to avoid deprecated notice 
+	$hexcolor = str_replace('#', '', $hexcolor);	
+	$r = hexdec(substr($hexcolor,0,2));
+	$g = hexdec(substr($hexcolor,2,2));
+	$b = hexdec(substr($hexcolor,4,2));
+	$yiq = (($r*299)+($g*587)+($b*114))/1000;
+	return ($yiq >= 128) ? 'black' : 'white';
 }
 
 

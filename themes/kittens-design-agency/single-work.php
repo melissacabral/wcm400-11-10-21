@@ -15,6 +15,14 @@
 						<h2 class="entry-title">
 							<?php the_title(); ?>
 						</h2>
+
+					<?php 
+					//show the work categories applied to this post
+					//			$id, 		$taxo, 		$before, $between, $after
+					the_terms( $post->id, 'work_category', '<h3>' , ', ', '</h3>' ); ?>
+
+					
+						
 						<?php 
 						//ACF demo - check to make sure the ACF plugin is running first
 						if( function_exists('get_field') ){
@@ -34,6 +42,11 @@
 				<div class="entry-content">
 					<?php the_content(); ?>
 					<?php wp_link_pages(); //if paginated content ?>
+
+					<?php 
+					//show the skills as a list
+	$title = __('Skills', 'kittens-design-agency');
+	the_terms( $post->id, 'skill', "<h3>$title</h3><ul><li>" , '</li><li>', '</li></ul>' ); ?>
 				</div>
 				
 			</article>
